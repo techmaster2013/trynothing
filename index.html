@@ -33,24 +33,25 @@ button{font:inherit;border:1px solid var(--line);background:var(--card);color:va
 .notification{border:1px solid var(--line);padding:14px;margin-bottom:10px;background:var(--card)}
 #drawer{display:none;position:absolute;inset:0;background:var(--bg);z-index:8;padding:28px 20px}.drawer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:25px 16px;margin-top:25px}
 #shade{display:none;position:absolute;inset:0;background:var(--bg);z-index:20;padding:25px 20px}.qs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:20px 0}.qs button{height:62px;text-align:left}.handle{width:35px;height:4px;background:var(--muted);border-radius:5px;margin:0 auto 18px}
+.pack-icon{background:#111!important;border-color:#111!important;overflow:hidden}.pack-icon img{width:70%;height:70%;object-fit:contain;filter:grayscale(1) brightness(0) invert(1)}.settings-icon span{font-size:27px;color:#fff}.nothing-icon span{font-size:29px;font-weight:900;color:#fff;font-family:Arial}.dark .pack-icon{background:#f4f4f4!important;border-color:#f4f4f4!important}.dark .pack-icon img{filter:grayscale(1) brightness(0)}.dark .settings-icon span,.dark .nothing-icon span{color:#111}.app .pack-icon{transition:transform .18s ease,box-shadow .18s ease}.app:active .pack-icon{transform:scale(.92)}
 </style>
 </head>
 <body>
 <div id="phone">
   <div class="status"><span id="statusTime">9:41</span><span>● ● ▪︎</span></div>
   <main class="home">
-    <div class="clock" id="clock">9:41</div><div class="date" id="date">Monday, October 2</div>
+    <div class="clock" id="clock"><span class="clock-glyph">9:41</span></div><div class="date" id="date">Monday, October 2</div>
     <div class="search" onclick="openPanel('search')">⌕ &nbsp; Search</div>
     <section class="grid">
-      <div class="app" onclick="openPanel('phoneApp')"><div class="icon">☎</div><b>Phone</b></div>
-      <div class="app" onclick="openPanel('messages')"><div class="icon">▢<i class="dot"></i></div><b>Messages</b></div>
-      <div class="app" onclick="openPanel('camera')"><div class="icon">◉</div><b>Camera</b></div>
-      <div class="app" onclick="openPanel('settings')"><div class="icon">⚙</div><b>Settings</b></div>
-      <div class="app" onclick="openPanel('gallery')"><div class="icon">▧</div><b>Gallery</b></div>
-      <div class="app" onclick="openPanel('nothing')"><div class="icon glyph">N</div><b>Nothing</b></div>
-      <div class="app" onclick="openPanel('files')"><div class="icon">□</div><b>Files</b></div>
-      <div class="app" onclick="openDrawer()"><div class="icon">•••</div><b>Apps</b></div>
-    </section>
+<div class="app" onclick="openPanel('phone')"><div class="icon pack-icon"><img src="https://raw.githubusercontent.com/Jefino9488/Nothing-LawnIcons/develop/svgs/aiphone_ixg.svg" alt=""></div><b>Phone</b></div>
+<div class="app" onclick="openPanel('messages')"><div class="icon pack-icon"><img src="https://raw.githubusercontent.com/Jefino9488/Nothing-LawnIcons/develop/svgs/airmessage.svg" alt=""></div><b>Messages</b></div>
+<div class="app" onclick="openPanel('camera')"><div class="icon pack-icon"><img src="https://raw.githubusercontent.com/Jefino9488/Nothing-LawnIcons/develop/svgs/bic_camera.svg" alt=""></div><b>Camera</b></div>
+<div class="app" onclick="openPanel('settings')"><div class="icon pack-icon settings-icon"><span>⚙</span></div><b>Settings</b></div>
+<div class="app" onclick="openPanel('gallery')"><div class="icon pack-icon"><img src="https://raw.githubusercontent.com/Jefino9488/Nothing-LawnIcons/develop/svgs/_1gallery.svg" alt=""></div><b>Gallery</b></div>
+<div class="app" onclick="openPanel('nothing')"><div class="icon pack-icon nothing-icon"><span>n</span></div><b>Nothing</b></div>
+<div class="app" onclick="openPanel('files')"><div class="icon pack-icon"><img src="https://raw.githubusercontent.com/Jefino9488/Nothing-LawnIcons/develop/svgs/amaze_file_manager.svg" alt=""></div><b>Files</b></div>
+<div class="app" onclick="openPanel('music')"><div class="icon pack-icon"><img src="https://raw.githubusercontent.com/Jefino9488/Nothing-LawnIcons/develop/svgs/airmusic.svg" alt=""></div><b>Music</b></div>
+</section>
     <div class="dock">
       <div class="app" onclick="openPanel('phoneApp')"><div class="icon">☎</div></div>
       <div class="app" onclick="openPanel('messages')"><div class="icon">▢</div></div>
@@ -60,8 +61,10 @@ button{font:inherit;border:1px solid var(--line);background:var(--card);color:va
   </main>
 
   <div id="drawer"><div class="handle"></div><h1>Apps</h1><div class="drawer-grid">
-    <div class="app" onclick="openPanel('phoneApp')"><div class="icon">☎</div><b>Phone</b></div><div class="app" onclick="openPanel('messages')"><div class="icon">▢</div><b>Messages</b></div><div class="app" onclick="openPanel('camera')"><div class="icon">◉</div><b>Camera</b></div><div class="app" onclick="openPanel('settings')"><div class="icon">⚙</div><b>Settings</b></div><div class="app" onclick="openPanel('gallery')"><div class="icon">▧</div><b>Gallery</b></div><div class="app" onclick="openPanel('nothing')"><div class="icon glyph">N</div><b>Nothing</b></div>
-  </div></div>
+<div class="app" onclick="openPanel('phone')"><div class="icon pack-icon"><img src="https://raw.githubusercontent.com/Jefino9488/Nothing-LawnIcons/develop/svgs/aiphone_ixg.svg" alt=""></div><b>Phone</b></div><div class="app" onclick="openPanel('messages')"><div class="icon pack-icon"><img src="https://raw.githubusercontent.com/Jefino9488/Nothing-LawnIcons/develop/svgs/airmessage.svg" alt=""></div><b>Messages</b></div><div class="app" onclick="openPanel('camera')"><div class="icon pack-icon"><img src="https://raw.githubusercontent.com/Jefino9488/Nothing-LawnIcons/develop/svgs/bic_camera.svg" alt=""></div><b>Camera</b></div>
+<div class="app" onclick="openPanel('settings')"><div class="icon pack-icon settings-icon"><span>⚙</span></div><b>Settings</b></div>
+<div class="app" onclick="openPanel('gallery')"><div class="icon pack-icon"><img src="https://raw.githubusercontent.com/Jefino9488/Nothing-LawnIcons/develop/svgs/_1gallery.svg" alt=""></div><b>Gallery</b></div><div class="app" onclick="openPanel('nothing')"><div class="icon pack-icon nothing-icon"><span>n</span></div><b>Nothing</b></div><div class="app" onclick="openPanel('files')"><div class="icon pack-icon"><img src="https://raw.githubusercontent.com/Jefino9488/Nothing-LawnIcons/develop/svgs/amaze_file_manager.svg" alt=""></div><b>Files</b></div><div class="app" onclick="openPanel('music')"><div class="icon pack-icon"><img src="https://raw.githubusercontent.com/Jefino9488/Nothing-LawnIcons/develop/svgs/airmusic.svg" alt=""></div><b>Music</b></div>
+</div></div>
 
   <div id="shade"><div class="handle"></div><div style="display:flex;justify-content:space-between"><b>Quick Settings</b><span id="shadeTime"></span></div><div class="qs"><button onclick="toggleTheme()">◐<br>Theme</button><button>⌁<br>Wi-Fi</button><button>⌁<br>Bluetooth</button><button>▣<br>Do Not Disturb</button></div><div class="notification"><b>Messages</b><br><small>1 new notification</small></div></div>
 
