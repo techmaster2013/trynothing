@@ -1,1 +1,210 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Galaxy One UI Emulator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="manifest.json" />
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
+  <style>
+    :root {
+      --bg-color: #f5f5f5;
+      --icon-bg: rgba(255, 255, 255, 0.85);
+      --text-color: #111;
+      --badge-color: #e00;
+    }
+    body.dark-mode {
+      --bg-color: #121212;
+      --icon-bg: rgba(30, 30, 30, 0.85);
+      --text-color: #eee;
+    }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background-image: url("https://images.unsplash.com/photo-1602524815917-3c3b6b9b6e5f?auto=format&fit=crop&w=1920&q=80");
+      background-size: cover;
+      background-position: center;
+      color: var(--text-color);
+    }
+    .overlay {
+      background-color: var(--bg-color);
+      opacity: 0.85;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    .header {
+      padding: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+    .search-bar {
+      padding: 0 20px 20px;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 20px;
+      border: none;
+      font-size: 16px;
+      background-color: var(--icon-bg);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    .controls {
+      text-align: center;
+      margin: 10px;
+    }
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      justify-items: center;
+    }
+    .app-icon {
+      width: 60px;
+      height: 60px;
+      background-color: var(--icon-bg);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      position: relative;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .app-icon:hover {
+      transform: scale(1.05);
+    }
+    .badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: var(--badge-color);
+      color: white;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 12px;
+    }
+    .app-window {
+      display: none;
+      position: fixed;
+      top: 10%;
+      left: 10%;
+      width: 80%;
+      height: 70%;
+      background-color: var(--icon-bg);
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      overflow-y: auto;
+      z-index: 10;
+      animation: fadeIn 0.3s ease-out;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    video {
+      width: 100%;
+      border-radius: 12px;
+    }
+    .overlay-img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 150px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 20;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="header" id="time-display">--:--</div>
+  <div class="search-bar">
+    <input type="text" placeholder="Search apps" />
+  </div>
+  <div class="controls">
+    <button onclick="toggleTheme()">🌓</button>
+  </div>
+
+  <div class="app-grid">
+    <div class="app-icon" onclick="openApp('phone')">📞</div>
+    <div class="app-icon" onclick="openApp('messages')">💬<div class="badge">1</div></div>
+    <div class="app-icon" onclick="openApp('camera')">📷</div>
+    <div class="app-icon" onclick="openApp('settings')">⚙️</div>
+    <div class="app-icon" onclick="openApp('gallery')">🖼️</div>
+    <div class="app-icon" onclick="openApp('wearables')">⌚</div>
+    <div class="app-icon" onclick="openApp('ring')">💍</div>
+  </div>
+
+  <!-- App Windows -->
+  <div id="phone" class="app-window">
+    <div class="close-btn" onclick="closeApp('phone')">✖</div>
+    <h2>Phone</h2>
+    <p>📞 Dial pad coming soon...</p>
+  </div>
+
+  <div id="messages" class="app-window">
+    <div class="close-btn" onclick="closeApp('messages')">✖</div>
+    <h2>Messages</h2>
+    <p>💬 You have 1 new message: "Galaxy UI looks 🔥"</p>
+  </div>
+
+  <div id="camera" class="app-window">
+    <div class="close-btn" onclick="closeApp('camera')">✖</div>
+    <h2>Camera</h2>
+    <video id="cam" autoplay></video>
+    <button onclick="swapCamera()">Swap Camera</button>
+    <button onclick="showOverlay('ring')">Try Ring</button>
+    <button onclick="showOverlay('watch')">Try Watch</button>
+    <img id="overlay-ring" class="overlay-img" src="https://images.samsung.com/is/image/samsung/assets/global/galaxy-ring/galaxy-ring-hero.jpg" style="display:none;" />
+    <img id="overlay-watch" class="overlay-img" src="https://images.samsung.com/is/image/samsung/assets/global/galaxy-watch-ultra/galaxy-watch-ultra-hero.jpg" style="display:none;" />
+  </div>
+
+  <div id="settings" class="app-window">
+    <div class="close-btn" onclick="closeApp('settings')">✖</div>
+    <h2>Settings</h2>
+    <p>Theme: <button onclick="toggleTheme()">Toggle Light/Dark</button></p>
+  </div>
+
+  <div id="gallery" class="app-window">
+    <div class="close-btn" onclick="closeApp('gallery')">✖</div>
+    <h2>Gallery</h2>
+    <img src="https://images.samsung.com/is/image/samsung/assets/global/galaxy-ring/galaxy-ring-hero.jpg" style="width:100%; border-radius:12px; margin-bottom:10px;" />
+    <img src="https://images.samsung.com/is/image/samsung/assets/global/galaxy-watch-ultra/galaxy-watch-ultra-hero.jpg" style="width:100%; border-radius:12px;" />
+  </div>
+
+  <div id="wearables" class="app-window">
+    <div class="close-btn" onclick="closeApp('wearables')">✖</div>
+    <h2>Galaxy Wearables</h2>
+    <p>⌚ Galaxy Watch Ultra connected</p>
+    <p>💍 Galaxy Ring battery: 92%</p>
+  </div>
+
+  <div id="ring" class="app-window
