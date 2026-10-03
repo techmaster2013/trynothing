@@ -1,210 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Galaxy One UI Emulator</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="manifest" href="manifest.json" />
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("service-worker.js");
-    }
-  </script>
-  <style>
-    :root {
-      --bg-color: #f5f5f5;
-      --icon-bg: rgba(255, 255, 255, 0.85);
-      --text-color: #111;
-      --badge-color: #e00;
-    }
-    body.dark-mode {
-      --bg-color: #121212;
-      --icon-bg: rgba(30, 30, 30, 0.85);
-      --text-color: #eee;
-    }
-    body {
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background-image: url("https://images.unsplash.com/photo-1602524815917-3c3b6b9b6e5f?auto=format&fit=crop&w=1920&q=80");
-      background-size: cover;
-      background-position: center;
-      color: var(--text-color);
-    }
-    .overlay {
-      background-color: var(--bg-color);
-      opacity: 0.85;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-    .header {
-      padding: 20px;
-      font-size: 28px;
-      font-weight: bold;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-    }
-    .search-bar {
-      padding: 0 20px 20px;
-    }
-    .search-bar input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 20px;
-      border: none;
-      font-size: 16px;
-      background-color: var(--icon-bg);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-    .controls {
-      text-align: center;
-      margin: 10px;
-    }
-    .app-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-      gap: 20px;
-      padding: 20px;
-      justify-items: center;
-    }
-    .app-icon {
-      width: 60px;
-      height: 60px;
-      background-color: var(--icon-bg);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      position: relative;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-    .app-icon:hover {
-      transform: scale(1.05);
-    }
-    .badge {
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      background-color: var(--badge-color);
-      color: white;
-      font-size: 12px;
-      padding: 2px 6px;
-      border-radius: 12px;
-    }
-    .app-window {
-      display: none;
-      position: fixed;
-      top: 10%;
-      left: 10%;
-      width: 80%;
-      height: 70%;
-      background-color: var(--icon-bg);
-      border-radius: 20px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-      padding: 20px;
-      overflow-y: auto;
-      z-index: 10;
-      animation: fadeIn 0.3s ease-out;
-    }
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: scale(0.95);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 20px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    video {
-      width: 100%;
-      border-radius: 12px;
-    }
-    .overlay-img {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 150px;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      z-index: 20;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Nothing OS Emulator</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>
+:root{--bg:#f2f2f2;--fg:#111;--muted:#666;--card:#fff;--line:#aaa;--red:#d71920}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--fg);letter-spacing:.02em}
+body.dark{--bg:#080808;--fg:#f4f4f4;--muted:#999;--card:#111;--line:#444}
+#phone{width:100%;height:100%;position:relative;overflow:hidden;background:var(--bg)}
+#phone:before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 20% 20%,rgba(0,0,0,.045) 1px,transparent 1px);background-size:8px 8px;pointer-events:none}
+.status{height:34px;padding:9px 17px 0;display:flex;justify-content:space-between;font-size:12px;font-weight:bold;position:relative;z-index:3}
+.home{height:calc(100% - 34px);padding:22px 20px 18px;display:flex;flex-direction:column;position:relative;z-index:2}
+.clock{font-size:72px;line-height:.9;font-weight:300;letter-spacing:-.08em;margin-top:8px}
+.date{font-size:13px;margin-top:12px;text-transform:uppercase}
+.search{margin-top:24px;border:1px solid var(--line);height:45px;border-radius:4px;display:flex;align-items:center;padding:0 13px;color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px 16px;margin-top:32px}
+.app{text-align:center;cursor:pointer;font-size:11px}.icon{width:54px;height:54px;margin:auto;border:1px solid var(--line);display:grid;place-items:center;font-size:22px;background:var(--card);border-radius:14px;position:relative}
+.app b{display:block;margin-top:8px;font-weight:400}.dot{position:absolute;right:-4px;top:-4px;width:13px;height:13px;background:var(--red);border-radius:50%;border:2px solid var(--bg)}
+.dock{margin-top:auto;border-top:1px solid var(--line);padding-top:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.glyph{font-weight:bold;color:var(--red)}
+.panel{position:absolute;inset:0;background:var(--bg);z-index:10;display:none;animation:up .22s ease}.panel.show{display:block}
+@keyframes up{from{transform:translateY(35px);opacity:0}to{transform:none;opacity:1}}
+.bar{height:58px;padding:18px 18px;display:flex;align-items:center;gap:16px;border-bottom:1px solid var(--line);font-weight:bold}.back{cursor:pointer;font-size:22px}
+.content{padding:22px 18px;overflow:auto;height:calc(100% - 58px)}
+h1{font-size:34px;font-weight:300;margin:5px 0 28px;letter-spacing:-.04em}h2{font-size:18px;margin:25px 0 12px}
+.row{padding:17px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.row small{color:var(--muted)}
+button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:10px 14px;border-radius:3px;cursor:pointer}
+.toggle{width:43px;height:24px;border-radius:20px;padding:2px}.toggle.on{background:var(--fg);color:var(--bg)}
+.camera{background:#000;color:#fff;height:100%;position:relative}.camera video{width:100%;height:100%;object-fit:cover}.camera .camui{position:absolute;inset:0;padding:25px;display:flex;flex-direction:column;justify-content:space-between}.shutter{width:70px;height:70px;border:3px solid #fff;border-radius:50%;align-self:center;background:transparent}
+.notification{border:1px solid var(--line);padding:14px;margin-bottom:10px;background:var(--card)}
+#drawer{display:none;position:absolute;inset:0;background:var(--bg);z-index:8;padding:28px 20px}.drawer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:25px 16px;margin-top:25px}
+#shade{display:none;position:absolute;inset:0;background:var(--bg);z-index:20;padding:25px 20px}.qs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:20px 0}.qs button{height:62px;text-align:left}.handle{width:35px;height:4px;background:var(--muted);border-radius:5px;margin:0 auto 18px}
+</style>
 </head>
 <body>
-  <div class="overlay"></div>
-  <div class="header" id="time-display">--:--</div>
-  <div class="search-bar">
-    <input type="text" placeholder="Search apps" />
-  </div>
-  <div class="controls">
-    <button onclick="toggleTheme()">🌓</button>
-  </div>
+<div id="phone">
+  <div class="status"><span id="statusTime">9:41</span><span>● ● ▪︎</span></div>
+  <main class="home">
+    <div class="clock" id="clock">9:41</div><div class="date" id="date">Monday, October 2</div>
+    <div class="search" onclick="openPanel('search')">⌕ &nbsp; Search</div>
+    <section class="grid">
+      <div class="app" onclick="openPanel('phoneApp')"><div class="icon">☎</div><b>Phone</b></div>
+      <div class="app" onclick="openPanel('messages')"><div class="icon">▢<i class="dot"></i></div><b>Messages</b></div>
+      <div class="app" onclick="openPanel('camera')"><div class="icon">◉</div><b>Camera</b></div>
+      <div class="app" onclick="openPanel('settings')"><div class="icon">⚙</div><b>Settings</b></div>
+      <div class="app" onclick="openPanel('gallery')"><div class="icon">▧</div><b>Gallery</b></div>
+      <div class="app" onclick="openPanel('nothing')"><div class="icon glyph">N</div><b>Nothing</b></div>
+      <div class="app" onclick="openPanel('files')"><div class="icon">□</div><b>Files</b></div>
+      <div class="app" onclick="openDrawer()"><div class="icon">•••</div><b>Apps</b></div>
+    </section>
+    <div class="dock">
+      <div class="app" onclick="openPanel('phoneApp')"><div class="icon">☎</div></div>
+      <div class="app" onclick="openPanel('messages')"><div class="icon">▢</div></div>
+      <div class="app" onclick="openPanel('camera')"><div class="icon">◉</div></div>
+      <div class="app" onclick="openPanel('settings')"><div class="icon">⚙</div></div>
+    </div>
+  </main>
 
-  <div class="app-grid">
-    <div class="app-icon" onclick="openApp('phone')">📞</div>
-    <div class="app-icon" onclick="openApp('messages')">💬<div class="badge">1</div></div>
-    <div class="app-icon" onclick="openApp('camera')">📷</div>
-    <div class="app-icon" onclick="openApp('settings')">⚙️</div>
-    <div class="app-icon" onclick="openApp('gallery')">🖼️</div>
-    <div class="app-icon" onclick="openApp('wearables')">⌚</div>
-    <div class="app-icon" onclick="openApp('ring')">💍</div>
-  </div>
+  <div id="drawer"><div class="handle"></div><h1>Apps</h1><div class="drawer-grid">
+    <div class="app" onclick="openPanel('phoneApp')"><div class="icon">☎</div><b>Phone</b></div><div class="app" onclick="openPanel('messages')"><div class="icon">▢</div><b>Messages</b></div><div class="app" onclick="openPanel('camera')"><div class="icon">◉</div><b>Camera</b></div><div class="app" onclick="openPanel('settings')"><div class="icon">⚙</div><b>Settings</b></div><div class="app" onclick="openPanel('gallery')"><div class="icon">▧</div><b>Gallery</b></div><div class="app" onclick="openPanel('nothing')"><div class="icon glyph">N</div><b>Nothing</b></div>
+  </div></div>
 
-  <!-- App Windows -->
-  <div id="phone" class="app-window">
-    <div class="close-btn" onclick="closeApp('phone')">✖</div>
-    <h2>Phone</h2>
-    <p>📞 Dial pad coming soon...</p>
-  </div>
+  <div id="shade"><div class="handle"></div><div style="display:flex;justify-content:space-between"><b>Quick Settings</b><span id="shadeTime"></span></div><div class="qs"><button onclick="toggleTheme()">◐<br>Theme</button><button>⌁<br>Wi-Fi</button><button>⌁<br>Bluetooth</button><button>▣<br>Do Not Disturb</button></div><div class="notification"><b>Messages</b><br><small>1 new notification</small></div></div>
 
-  <div id="messages" class="app-window">
-    <div class="close-btn" onclick="closeApp('messages')">✖</div>
-    <h2>Messages</h2>
-    <p>💬 You have 1 new message: "Galaxy UI looks 🔥"</p>
-  </div>
-
-  <div id="camera" class="app-window">
-    <div class="close-btn" onclick="closeApp('camera')">✖</div>
-    <h2>Camera</h2>
-    <video id="cam" autoplay></video>
-    <button onclick="swapCamera()">Swap Camera</button>
-    <button onclick="showOverlay('ring')">Try Ring</button>
-    <button onclick="showOverlay('watch')">Try Watch</button>
-    <img id="overlay-ring" class="overlay-img" src="https://images.samsung.com/is/image/samsung/assets/global/galaxy-ring/galaxy-ring-hero.jpg" style="display:none;" />
-    <img id="overlay-watch" class="overlay-img" src="https://images.samsung.com/is/image/samsung/assets/global/galaxy-watch-ultra/galaxy-watch-ultra-hero.jpg" style="display:none;" />
-  </div>
-
-  <div id="settings" class="app-window">
-    <div class="close-btn" onclick="closeApp('settings')">✖</div>
-    <h2>Settings</h2>
-    <p>Theme: <button onclick="toggleTheme()">Toggle Light/Dark</button></p>
-  </div>
-
-  <div id="gallery" class="app-window">
-    <div class="close-btn" onclick="closeApp('gallery')">✖</div>
-    <h2>Gallery</h2>
-    <img src="https://images.samsung.com/is/image/samsung/assets/global/galaxy-ring/galaxy-ring-hero.jpg" style="width:100%; border-radius:12px; margin-bottom:10px;" />
-    <img src="https://images.samsung.com/is/image/samsung/assets/global/galaxy-watch-ultra/galaxy-watch-ultra-hero.jpg" style="width:100%; border-radius:12px;" />
-  </div>
-
-  <div id="wearables" class="app-window">
-    <div class="close-btn" onclick="closeApp('wearables')">✖</div>
-    <h2>Galaxy Wearables</h2>
-    <p>⌚ Galaxy Watch Ultra connected</p>
-    <p>💍 Galaxy Ring battery: 92%</p>
-  </div>
-
-  <div id="ring" class="app-window
+  <div id="phoneApp" class="panel"><div class="bar"><span class="back" onclick="closePanel()">‹</span>Phone</div><div class="content"><h1>Phone</h1><div class="row">Keypad <span>⌕</span></div><div class="row">Recents <small>No recent calls</small></div><div class="row">Contacts <small>0 contacts</small></div></div></div>
+  <div id="messages" class="panel"><div class="bar"><span class="back" onclick="closePanel()">‹</span>Messages</div><div class="content"><h1>Messages</h1><div class="notification">New message<br><small>Nothing OS looks clean.</small></div></div></div>
+  <div id="settings" class="panel"><div class="bar"><span class="back" onclick="closePanel()">‹</span>Settings</div><div class="content"><h1>Settings</h1><div class="row">Network & internet <small>Wi-Fi</small></div><div class="row">Connected devices <small>Bluetooth</small></div><div class="row">Display <small>Nothing style</small></div><div class="row">Sound & vibration <small>Glyph</small></div><div class="row">System <small>Android</small></div><div class="row">Dark theme <button class="toggle" onclick="toggleTheme()">◐</button></div></div></div>
+  <div id="gallery" class="panel"><div class="bar"><span class="back" onclick="closePanel()">‹</span>Gallery</div><div class="content"><h1>Gallery</h1><div class="row">Nothing photos <small>0 items</small></div></div></div>
+  <div id="nothing" class="panel"><div class="bar"><span class="back" onclick="closePanel()">‹</span>Nothing</div><div class="content"><h1 class="glyph">NOTHING</h1><p>OS simulator</p><div class="row">Glyph Interface <small>Ready</small></div><div class="row">Nothing Launcher <small>Active</small></div></div></div>
+  <div id="files" class="panel"><div class="bar"><span class="back" onclick="closePanel()">‹</span>Files</div><div class="content"><h1>Files</h1><div class="row">Internal storage <small>0 B</small></div></div></div>
+  <div id="search" class="panel"><div class="bar"><span class="back" onclick="closePanel()">‹</span>Search</div><div class="content"><h1>Search</h1><input style="width:100%;height:45px;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:12px" placeholder="Search apps, settings…"></div></div>
+  <div id="camera" class="panel camera"><div class="camui"><span class="back" onclick="closePanel()">‹</span><span style="text-align:center">CAMERA</span><button class="shutter"> </button></div></div>
+</div>
+<script>
+function openPanel(id){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('show'));document.getElementById('drawer').style.display='none';document.getElementById('shade').style.display='none';document.getElementById(id).classList.add('show')}
+function closePanel(){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('show'))}
+function openDrawer(){document.getElementById('drawer').style.display='block'}
+function toggleTheme(){document.body.classList.toggle('dark')}
+function tick(){const d=new Date(),t=d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}),day=d.toLocaleDateString([], {weekday:'long',month:'long',day:'numeric'});document.getElementById('clock').textContent=t;document.getElementById('statusTime').textContent=t;document.getElementById('shadeTime').textContent=t;document.getElementById('date').textContent=day}
+setInterval(tick,1000);tick();
+let sy=0;
+document.getElementById('phone').addEventListener('touchstart',e=>sy=e.touches[0].clientY,{passive:true});
+document.getElementById('phone').addEventListener('touchend',e=>{let dy=e.changedTouches[0].clientY-sy;if(sy<80&&dy>80){document.getElementById('shade').style.display='block'}else if(dy<-100){openDrawer()}});
+</script>
+</body>
+</html>
