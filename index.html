@@ -10,6 +10,7 @@
 body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--fg);letter-spacing:.02em}
 body.dark{--bg:#080808;--fg:#f4f4f4;--muted:#999;--card:#111;--line:#444}
 #phone{width:100%;height:100%;position:relative;overflow:hidden;background:var(--bg)}
+.lockScreen{position:absolute;inset:0;z-index:100;background:#101010;color:#fff;display:none;padding:78px 24px 30px;flex-direction:column}.lockScreen.show{display:flex}.lockTime{font-size:82px;font-weight:300;letter-spacing:-.08em}.lockDate{margin-top:14px}.lockNotif{margin-top:auto;border:1px solid #555;background:#202020;padding:15px}.lockBottom{display:flex;justify-content:space-between;margin-top:24px}.lockBottom span{width:50px;height:50px;border:1px solid #777;border-radius:50%;display:grid;place-items:center}.lockScreen small{text-align:center;color:#aaa;margin-top:17px}
 #phone:before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 20% 20%,rgba(0,0,0,.045) 1px,transparent 1px);background-size:8px 8px;pointer-events:none}
 .status{height:34px;padding:9px 17px 0;display:flex;justify-content:space-between;font-size:12px;font-weight:bold;position:relative;z-index:3}
 .home{height:calc(100% - 34px);padding:22px 20px 18px;display:flex;flex-direction:column;position:relative;z-index:2}
@@ -32,14 +33,16 @@ button{font:inherit;border:1px solid var(--line);background:var(--card);color:va
 .camera{background:#000;color:#fff;height:100%;position:relative}.camera video{width:100%;height:100%;object-fit:cover}.camera .camui{position:absolute;inset:0;padding:25px;display:flex;flex-direction:column;justify-content:space-between}.shutter{width:70px;height:70px;border:3px solid #fff;border-radius:50%;align-self:center;background:transparent}
 .notification{border:1px solid var(--line);padding:14px;margin-bottom:10px;background:var(--card)}
 #drawer{display:none;position:absolute;inset:0;background:var(--bg);z-index:8;padding:28px 20px}.drawer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:25px 16px;margin-top:25px}
-#shade{display:none;position:absolute;inset:0;background:var(--bg);z-index:20;padding:25px 20px}.qs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:20px 0}.qs button{height:62px;text-align:left}.handle{width:35px;height:4px;background:var(--muted);border-radius:5px;margin:0 auto 18px}
+#shade{display:none;position:absolute;inset:0;background:var(--bg);z-index:20;padding:25px 20px}
+.recents{z-index:25}.recentCard{border:1px solid var(--line);background:var(--card);padding:24px;margin-bottom:12px;height:150px;font-size:20px}.recentCard small{display:block;color:var(--muted);margin-top:10px}.qs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:20px 0}.qs button{height:62px;text-align:left}.qs button.active{background:var(--fg);color:var(--bg)}.slider{height:7px;background:var(--line);margin:18px 0}.slider i{display:block;width:68%;height:100%;background:var(--fg)}.handle{width:35px;height:4px;background:var(--muted);border-radius:5px;margin:0 auto 18px}
 .pack-icon{background:#111!important;border-color:#111!important;overflow:hidden}.pack-icon img{width:70%;height:70%;object-fit:contain;filter:grayscale(1) brightness(0) invert(1)}.settings-icon span{font-size:27px;color:#fff}.nothing-icon span{font-size:29px;font-weight:900;color:#fff;font-family:Arial}.dark .pack-icon{background:#f4f4f4!important;border-color:#f4f4f4!important}.dark .pack-icon img{filter:grayscale(1) brightness(0)}.dark .settings-icon span,.dark .nothing-icon span{color:#111}.app .pack-icon{transition:transform .18s ease,box-shadow .18s ease}.app:active .pack-icon{transform:scale(.92)}
 </style>
 </head>
 <body>
 <div id="phone">
   <div class="status"><span id="statusTime">9:41</span><span>● ● ▪︎</span></div>
-  <main class="home">
+  <div id="lockScreen" class="lockScreen"><div class="lockTime" id="lockTime">9:41</div><div class="lockDate" id="lockDate">Monday, October 2</div><div class="lockNotif"><b>MESSAGES</b><br>New message</div><div class="lockBottom"><span>⌁</span><span>▣</span></div><small>SWIPE UP TO UNLOCK</small></div>
+<main class="home">
     <div class="clock" id="clock"><span class="clock-glyph">9:41</span></div><div class="date" id="date">Monday, October 2</div>
     <div class="search" onclick="openPanel('search')">⌕ &nbsp; Search</div>
     <section class="grid">
@@ -66,7 +69,11 @@ button{font:inherit;border:1px solid var(--line);background:var(--card);color:va
 <div class="app" onclick="openPanel('gallery')"><div class="icon pack-icon"><img src="https://raw.githubusercontent.com/Jefino9488/Nothing-LawnIcons/develop/svgs/_1gallery.svg" alt=""></div><b>Gallery</b></div><div class="app" onclick="openPanel('nothing')"><div class="icon pack-icon nothing-icon"><span>n</span></div><b>Nothing</b></div><div class="app" onclick="openPanel('files')"><div class="icon pack-icon"><img src="https://raw.githubusercontent.com/Jefino9488/Nothing-LawnIcons/develop/svgs/amaze_file_manager.svg" alt=""></div><b>Files</b></div><div class="app" onclick="openPanel('music')"><div class="icon pack-icon"><img src="https://raw.githubusercontent.com/Jefino9488/Nothing-LawnIcons/develop/svgs/airmusic.svg" alt=""></div><b>Music</b></div>
 </div></div>
 
-  <div id="shade"><div class="handle"></div><div style="display:flex;justify-content:space-between"><b>Quick Settings</b><span id="shadeTime"></span></div><div class="qs"><button onclick="toggleTheme()">◐<br>Theme</button><button>⌁<br>Wi-Fi</button><button>⌁<br>Bluetooth</button><button>▣<br>Do Not Disturb</button></div><div class="notification"><b>Messages</b><br><small>1 new notification</small></div></div>
+  <div id="recents" class="panel recents"><div class="bar"><span class="back" onclick="closeRecents()">‹</span>Recent apps</div><div class="content"><div class="recentCard"><b>Settings</b><small>Nothing OS</small></div><div class="recentCard"><b>Messages</b><small>1 notification</small></div><button onclick="closeRecents()">Clear all</button><div class="app" onclick="openPanel('clock')"><div class="icon pack-icon"><img src="https://raw.githubusercontent.com/Jefino9488/Nothing-LawnIcons/develop/svgs/aosp_clock.svg"></div><b>Clock</b></div>
+<div class="app" onclick="openPanel('calculator')"><div class="icon">＋</div><b>Calculator</b></div>
+</div></div>
+
+  <div id="shade"><div class="handle"></div><div style="display:flex;justify-content:space-between"><div><div style="font-size:36px;font-weight:300" id="shadeTime"></div><small>MONDAY, OCTOBER 2</small></div><b>72%</b></div><div class="qs"><button class="active" onclick="this.classList.toggle('active')">◉<br>Wi-Fi</button><button onclick="this.classList.toggle('active')">ᛒ<br>Bluetooth</button><button onclick="this.classList.toggle('active')">✈<br>Airplane</button><button onclick="this.classList.toggle('active')">☾<br>DND</button></div><div class="slider"><i></i></div><div class="notification"><b>Messages · now</b><br><small>New message</small></div><div class="notification"><b>Android System · 2m</b><br><small>USB debugging connected</small></div></div>
 
   <div id="phoneApp" class="panel"><div class="bar"><span class="back" onclick="closePanel()">‹</span>Phone</div><div class="content"><h1>Phone</h1><div class="row">Keypad <span>⌕</span></div><div class="row">Recents <small>No recent calls</small></div><div class="row">Contacts <small>0 contacts</small></div></div></div>
   <div id="messages" class="panel"><div class="bar"><span class="back" onclick="closePanel()">‹</span>Messages</div><div class="content"><h1>Messages</h1><div class="notification">New message<br><small>Nothing OS looks clean.</small></div></div></div>
@@ -75,18 +82,22 @@ button{font:inherit;border:1px solid var(--line);background:var(--card);color:va
   <div id="nothing" class="panel"><div class="bar"><span class="back" onclick="closePanel()">‹</span>Nothing</div><div class="content"><h1 class="glyph">NOTHING</h1><p>OS simulator</p><div class="row">Glyph Interface <small>Ready</small></div><div class="row">Nothing Launcher <small>Active</small></div></div></div>
   <div id="files" class="panel"><div class="bar"><span class="back" onclick="closePanel()">‹</span>Files</div><div class="content"><h1>Files</h1><div class="row">Internal storage <small>0 B</small></div></div></div>
   <div id="search" class="panel"><div class="bar"><span class="back" onclick="closePanel()">‹</span>Search</div><div class="content"><h1>Search</h1><input style="width:100%;height:45px;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:12px" placeholder="Search apps, settings…"></div></div>
-  <div id="camera" class="panel camera"><div class="camui"><span class="back" onclick="closePanel()">‹</span><span style="text-align:center">CAMERA</span><button class="shutter"> </button></div></div>
+  <div id="clock" class="panel"><div class="bar"><span class="back" onclick="closePanel()">‹</span>Clock</div><div class="content"><h1>Clock</h1><div class="row">Alarm <small>None</small></div><div class="row">Timer <small>00:00</small></div><div class="row">Stopwatch <small>00:00</small></div></div></div>
+<div id="calculator" class="panel"><div class="bar"><span class="back" onclick="closePanel()">‹</span>Calculator</div><div class="content"><h1>Calculator</h1><input style="width:100%;height:55px;font-size:25px;background:var(--card);color:var(--fg);border:1px solid var(--line);padding:10px" placeholder="0"><div class="grid" style="margin-top:20px"><button>7</button><button>8</button><button>9</button><button>÷</button><button>4</button><button>5</button><button>6</button><button>×</button><button>1</button><button>2</button><button>3</button><button>−</button></div></div></div>
+<div id="camera" class="panel camera"><div class="camui"><span class="back" onclick="closePanel()">‹</span><span style="text-align:center">CAMERA</span><button class="shutter"> </button></div></div>
 </div>
 <script>
 function openPanel(id){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('show'));document.getElementById('drawer').style.display='none';document.getElementById('shade').style.display='none';document.getElementById(id).classList.add('show')}
 function closePanel(){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('show'))}
 function openDrawer(){document.getElementById('drawer').style.display='block'}
 function toggleTheme(){document.body.classList.toggle('dark')}
-function tick(){const d=new Date(),t=d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}),day=d.toLocaleDateString([], {weekday:'long',month:'long',day:'numeric'});document.getElementById('clock').textContent=t;document.getElementById('statusTime').textContent=t;document.getElementById('shadeTime').textContent=t;document.getElementById('date').textContent=day}
-setInterval(tick,1000);tick();
+function tick(){const d=new Date(),t=d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}),day=d.toLocaleDateString([], {weekday:'long',month:'long',day:'numeric'});document.getElementById('clock').textContent=t;document.getElementById('statusTime').textContent=t;document.getElementById('shadeTime').textContent=t;document.getElementById('date').textContent=day;document.getElementById('lockTime').textContent=t;document.getElementById('lockDate').textContent=day}
+setInterval(tick,1000);tick();document.getElementById('phone').addEventListener('dblclick',showLock);
 let sy=0;
 document.getElementById('phone').addEventListener('touchstart',e=>sy=e.touches[0].clientY,{passive:true});
-document.getElementById('phone').addEventListener('touchend',e=>{let dy=e.changedTouches[0].clientY-sy;if(sy<80&&dy>80){document.getElementById('shade').style.display='block'}else if(dy<-100){openDrawer()}});
+document.getElementById('phone').addEventListener('touchend',e=>{let dy=e.changedTouches[0].clientY-sy;if(document.getElementById('lockScreen').classList.contains('show')){if(dy<-80)document.getElementById('lockScreen').classList.remove('show');return}if(sy<80&&dy>80){document.getElementById('shade').style.display='block'}else if(dy<-100){openDrawer()}});
+function closeRecents(){document.getElementById('recents').classList.remove('show')}
+function showLock(){document.getElementById('lockScreen').classList.add('show')}
 </script>
 </body>
 </html>
